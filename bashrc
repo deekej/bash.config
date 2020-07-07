@@ -8,7 +8,7 @@ fi
 
 # --------------------------------- #
 
-if [[ "$(uname -n)" == Normandy-SR5* ]]; then
+if [[ "$(uname -n)" == Normandy-SR* ]]; then
   export HISTFILE="$HOME/.bash/history"
 
   export HISTSIZE=10240
