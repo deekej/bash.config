@@ -23,7 +23,7 @@ if [[ "$(uname -n)" == Normandy-SR* ]]; then
     if xrandr -d :0 --listmonitors | grep -q 'XWAYLAND1'; then
       setfont ter-m16v  # Smaller font for external display.
     else
-      setfont ter-m32b  # Bigger font for dedicated screen.
+      setfont ter-m20b  # Bigger font for dedicated screen.
     fi
   fi
 
