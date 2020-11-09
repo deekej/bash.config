@@ -124,4 +124,9 @@ else
   # Workflow section:
   # -----------------
   alias make='make -j'
+
+  # Source the shared configuration, custom aliases, and defaults overrides:
+  if [ -f ~/.profile.d/global-environment.sh ]; then
+    source  ~/.profile.d/global-environment.sh
+  fi
 fi
