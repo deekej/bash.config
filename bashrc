@@ -59,10 +59,16 @@ else
   fi
 
   # Set the custom Bash prompt:
-  if [ ${EUID} -eq 0 ] ; then
-    PS1='\[\033[01;33m\]\h\[\033[01;37m\][\[\033[01;31m\]\u\[\033[01;37m\]] \[\033[01;34m\]\w \$\[\033[00m\] '
+  if hostname | grep -qi 'stage'; then
+    PS1='\[\033[01;33m\]\h-staging\[\033[01;37m\]'
   else
-    PS1='\[\033[01;33m\]\h\[\033[01;37m\][\[\033[01;32m\]\u\[\033[01;37m\]] \[\033[01;34m\]\w \$\[\033[00m\] '
+    PS1='\[\033[01;33m\]\h\[\033[01;37m\]'
+  fi
+
+  if [ ${EUID} -eq 0 ] ; then
+    PS1="${PS1}[\[\033[01;31m\]\u\[\033[01;37m\]] \[\033[01;34m\]\w \$\[\033[00m\] "
+  else
+    PS1="${PS1}[\[\033[01;32m\]\u\[\033[01;37m\]] \[\033[01;34m\]\w \$\[\033[00m\] "
   fi
 
   # Enabling the legacy bash completion feature (if it exists):
