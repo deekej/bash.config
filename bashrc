@@ -21,9 +21,7 @@ if [[ "$(uname -n)" == Normandy-SR* ]]; then
   # Set the appropriate font size for TTY:
   if [ -z "$DISPLAY" ]; then
     if xrandr -d :0 --listmonitors | grep -q 'XWAYLAND1'; then
-      setfont ter-m16v  # Smaller font for external display.
-    else
-      setfont ter-m20b  # Bigger font for dedicated screen.
+      setfont ter-m20b  # Good size for both dedicated & external display.
     fi
   fi
 
