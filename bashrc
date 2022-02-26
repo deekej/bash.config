@@ -1,15 +1,15 @@
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+[ -z "${PS1}" ] && return
 
 # Source the default system configuration for bash:
-if [ -z "$BASHSOURCED" ] && [ -f /etc/bashrc ]; then
+if [ -z "${BASHSOURCED}" ] && [ -r /etc/bashrc ]; then
   source /etc/bashrc
 fi
 
 # --------------------------------- #
 
 if [[ "$(uname -n)" == Normandy-SR* ]]; then
-  export HISTFILE="$HOME/.bash/history"
+  export HISTFILE="${HOME}/.bash/history"
 
   export HISTSIZE=10240
   export HISTFILESIZE=102400
@@ -18,17 +18,8 @@ if [[ "$(uname -n)" == Normandy-SR* ]]; then
 
   # --------------------------------- #
 
-  # Set the appropriate font size for TTY:
-  if [ -z "$DISPLAY" ]; then
-    if xrandr -d :0 --listmonitors | grep -q 'XWAYLAND1'; then
-      setfont ter-m20b  # Good size for both dedicated & external display.
-    fi
-  fi
-
-  # --------------------------------- #
-
   # Source the shared configuration, custom aliases, and defaults overrides:
-  if [ -f /etc/profile.d/global-environment.sh ]; then
+  if [ -r /etc/profile.d/global-environment.sh ]; then
     source /etc/profile.d/global-environment.sh
   fi
 else
@@ -45,17 +36,6 @@ else
 
   # NOTE: We expect that every terminal nowadays supports the colored output.
 
-  # Enable colors for ls, etc., and prefer ~/.dir_colors:
-  if type -P dircolors >/dev/null ; then
-    if [ -f ~/.dir_colors ] ; then
-      eval $(dircolors -b ~/.dir_colors)
-    elif [ -f /etc/DIR_COLORS ] ; then
-      eval $(dircolors -b /etc/DIR_COLORS)
-    else
-      eval $(dircolors)
-    fi
-  fi
-
   # Set the custom Bash prompt:
   if hostname | grep -qi 'stage'; then
     PS1='\[\033[01;33m\]\h-staging\[\033[01;37m\]'
@@ -70,9 +50,9 @@ else
   fi
 
   # Enabling the legacy bash completion feature (if it exists):
-  if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+  if [ -r /etc/bash_completion ] && ! shopt -oq posix; then
     source /etc/bash_completion
-  elif [ -f /etc/profile.d/bash_completion.sh ]; then
+  elif [ -r /etc/profile.d/bash_completion.sh ]; then
     source /etc/profile.d/bash_completion.sh
   fi
 
@@ -119,18 +99,8 @@ else
   alias ipconfig='ifconfig'
   alias whatsmyip='dig +short myip.opendns.com @resolver1.opendns.com'
 
-  # Security section:
-  # -----------------
-  alias su='su -'
-  alias pwgen='pwgen -scnyB'
-  alias PINgen="hexdump -n 2 -e '1/1 \"%03u\"' /dev/urandom; echo \"\""
-
-  # Workflow section:
-  # -----------------
-  alias make='make -j'
-
   # Source the shared configuration, custom aliases, and defaults overrides:
-  if [ -f ~/.profile.d/global-environment.sh ]; then
-    source  ~/.profile.d/global-environment.sh
+  if [ -r "${HOME}/.profile.d/global-environment.sh" ]; then
+    source  "${HOME}/.profile.d/global-environment.sh"
   fi
 fi
