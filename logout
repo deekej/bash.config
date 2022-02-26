@@ -2,13 +2,6 @@
 # ~/.bash/logout: executed by bash(1) when login shell exits.
 
 # Clear the screen when leaving from root's shell to increase privacy:
-if [[ $EUID == 0 && $SHLVL == 1 ]]; then
+if [[ ${EUID} == 0 && ${SHLVL} == 1 ]]; then
   [ -x /usr/bin/clear ] && reset
 fi
-
-# Disable the xhost when leaving, and clear the screen to increase privacy...
-#if [[ $EUID == 0 && $SHLVL == 1 ]]; then
-#  xhost -SI:localuser:root &> /dev/null
-#  [ -x /usr/bin/clear ] && reset
-#  echo "root: xhost has been disabled"
-#fi
