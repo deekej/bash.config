@@ -10,12 +10,15 @@ fi
 
 # Set the custom Bash prompt:
 if hostname | grep -qi 'toolbox'; then
+  # Clear the error message about ZSH not being available:
+  [ -x /usr/bin/clear ] && reset
+
   # Obtains name of current Toolbox:
   eval $(cat /run/.containerenv | grep -e 'name=')
 
-  [[ "${name}" == fedora-toolbox-* ]] && name='fedora'
+  [[ "${name}" == fedora-toolbox-* ]] && name='default'
 
-  PS1="\[\033[01;33m\]\h-${name:='default'}\[\033[01;37m\]"
+  PS1="\[\033[01;35m\]\h-${name:='default'}\[\033[01;37m\]"
 elif hostname | grep -qi 'stage'; then
   PS1='\[\033[01;33m\]\h-staging\[\033[01;37m\]'
 else
